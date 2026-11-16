@@ -4,6 +4,15 @@
 
 DEIVS is a Python-based Digital Forensics project designed to register digital evidence and verify its integrity using SHA-256 cryptographic hashing.
 
+## Project Team
+
+| Sr. No. | Team Member Name | PRN Number |
+|:---:|---|:---:|
+| 1 | Pranav Mohan Agrawal | 1272260373 |
+| 2 | Rujula Jadhav | 1272261758 |
+| 3 | Swayam Dakare | 1272261583 |
+| 4 | Samruddhi Salunke | 1272261145 |
+
 ## Features
 
 - Register digital evidence files.
