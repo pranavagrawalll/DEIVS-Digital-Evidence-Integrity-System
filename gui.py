@@ -202,19 +202,32 @@ class DEIVSApp:
             tree.heading(col, text=heading, anchor="center")
             tree.column(col, width=width, minwidth=65, anchor="center", stretch=True)
 
-        # Provide both vertical and horizontal scrolling on every data table.
+        # Scrollbars appear only when the table content exceeds the visible area.
         vertical_scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
         horizontal_scroll = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)
-        tree.configure(
-            yscrollcommand=vertical_scroll.set,
-            xscrollcommand=horizontal_scroll.set
-        )
 
         frame.grid_rowconfigure(0, weight=1)
         frame.grid_columnconfigure(0, weight=1)
         tree.grid(row=0, column=0, sticky="nsew")
-        vertical_scroll.grid(row=0, column=1, sticky="ns")
-        horizontal_scroll.grid(row=1, column=0, sticky="ew")
+
+        def update_vertical_scroll(first, last):
+            vertical_scroll.set(first, last)
+            if float(first) <= 0.0 and float(last) >= 1.0:
+                vertical_scroll.grid_remove()
+            else:
+                vertical_scroll.grid(row=0, column=1, sticky="ns")
+
+        def update_horizontal_scroll(first, last):
+            horizontal_scroll.set(first, last)
+            if float(first) <= 0.0 and float(last) >= 1.0:
+                horizontal_scroll.grid_remove()
+            else:
+                horizontal_scroll.grid(row=1, column=0, sticky="ew")
+
+        tree.configure(
+            yscrollcommand=update_vertical_scroll,
+            xscrollcommand=update_horizontal_scroll
+        )
 
         return tree
 
