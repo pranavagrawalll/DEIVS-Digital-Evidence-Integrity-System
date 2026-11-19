@@ -1,0 +1,119 @@
+
+name: Build DEIVS for Windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "gui.py"
+      - "database.py"
+      - "hashing.py"
+      - "report.py"
+      - "app_paths.py"
+      - "requirements.txt"
+      - ".github/workflows/build-windows.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-x64:
+    name: Windows x64 (64-bit)
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          architecture: "x64"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Build application
+        run: |
+          pyinstaller --noconfirm --clean --windowed --name DEIVS gui.py
+
+      - name: Create ZIP
+        run: |
+          Compress-Archive -Path dist/DEIVS -DestinationPath DEIVS-Windows-x64.zip -Force
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: DEIVS-Windows-x64
+          path: DEIVS-Windows-x64.zip
+
+  build-x86:
+    name: Windows x86 (32-bit)
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          architecture: "x86"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Build application
+        run: |
+          pyinstaller --noconfirm --clean --windowed --name DEIVS gui.py
+
+      - name: Create ZIP
+        run: |
+          Compress-Archive -Path dist/DEIVS -DestinationPath DEIVS-Windows-x86.zip -Force
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: DEIVS-Windows-x86
+          path: DEIVS-Windows-x86.zip
+
+  build-arm64:
+    name: Windows ARM64
+    runs-on: windows-11-arm
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          architecture: "arm64"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Build application
+        run: |
+          pyinstaller --noconfirm --clean --windowed --name DEIVS gui.py
+
+      - name: Create ZIP
+        run: |
+          Compress-Archive -Path dist/DEIVS -DestinationPath DEIVS-Windows-ARM64.zip -Force
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: DEIVS-Windows-ARM64
+          path: DEIVS-Windows-ARM64.zip
