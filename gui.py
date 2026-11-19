@@ -195,15 +195,27 @@ class DEIVSApp:
     def make_tree(self, parent, columns, headings, widths):
         frame = tk.Frame(parent, bg=self.c["panel"])
         frame.pack(fill="both", expand=True)
+
         tree = ttk.Treeview(frame, columns=columns, show="headings", style="DEIVS.Treeview")
         for col, heading, width in zip(columns, headings, widths):
             # Keep every table visually consistent: centered headings and cell values.
             tree.heading(col, text=heading, anchor="center")
             tree.column(col, width=width, minwidth=65, anchor="center", stretch=True)
-        scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
-        tree.configure(yscrollcommand=scroll.set)
-        tree.pack(side="left", fill="both", expand=True)
-        scroll.pack(side="right", fill="y")
+
+        # Provide both vertical and horizontal scrolling on every data table.
+        vertical_scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
+        horizontal_scroll = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)
+        tree.configure(
+            yscrollcommand=vertical_scroll.set,
+            xscrollcommand=horizontal_scroll.set
+        )
+
+        frame.grid_rowconfigure(0, weight=1)
+        frame.grid_columnconfigure(0, weight=1)
+        tree.grid(row=0, column=0, sticky="nsew")
+        vertical_scroll.grid(row=0, column=1, sticky="ns")
+        horizontal_scroll.grid(row=1, column=0, sticky="ew")
+
         return tree
 
     def show_evidence(self):
