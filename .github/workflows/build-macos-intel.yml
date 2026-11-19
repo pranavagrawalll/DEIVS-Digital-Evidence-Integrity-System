@@ -1,0 +1,63 @@
+
+name: Build DEIVS for Intel macOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "gui.py"
+      - "database.py"
+      - "hashing.py"
+      - "report.py"
+      - "app_paths.py"
+      - "requirements.txt"
+      - ".github/workflows/build-macos-intel.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-intel:
+    name: macOS Intel (x86_64)
+    runs-on: macos-15-intel
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Verify Intel architecture
+        run: |
+          python -c "import platform; print(platform.machine())"
+          test "$(python -c 'import platform; print(platform.machine())')" = "x86_64"
+
+      - name: Build application
+        run: |
+          pyinstaller --noconfirm --clean --windowed --name DEIVS gui.py
+
+      - name: Verify application architecture
+        run: |
+          lipo -archs dist/DEIVS.app/Contents/MacOS/DEIVS
+
+      - name: Create ZIP
+        run: |
+          ditto -c -k --sequesterRsrc --keepParent dist/DEIVS.app DEIVS-macOS-Intel.zip
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: DEIVS-macOS-Intel
+          path: DEIVS-macOS-Intel.zip
+          if-no-files-found: error
