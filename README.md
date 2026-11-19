@@ -1,61 +1,9 @@
 # DEIVS
 ## Digital Evidence Integrity & Verification System
 
-DEIVS is a Python-based Digital Forensics desktop application designed to register, manage and verify the integrity of digital evidence using SHA-256 cryptographic hashing.
+DEIVS (Digital Evidence Integrity & Verification System) is a Python-based desktop application developed as a group academic project. It is designed to register, manage, and verify the integrity of digital evidence using SHA-256 cryptographic hashing.
 
-The system provides a graphical user interface for evidence management, integrity verification, verification history tracking, evidence archiving and PDF investigation report generation.
-
----
-
-## Latest Release – v1.0.0
-
-**DEIVS Desktop Application for macOS**
-
-[**Download DEIVS v1.0.0**](https://github.com/pranavagrawalll/DEIVS-Digital-Evidence-Integrity-System/releases/download/v1.0.0/DEIVS-macOS.zip)
-
-[View Release Details](https://github.com/pranavagrawalll/DEIVS-Digital-Evidence-Integrity-System/releases/tag/v1.0.0)
-
-### Installation
-
-1. Download `DEIVS-macOS.zip`.
-2. Extract the downloaded ZIP file.
-3. Open the extracted folder.
-4. Launch `DEIVS.app`.
-5. If macOS displays a security warning, follow the appropriate macOS security approval process.
-
-**Note:** The application is packaged with its required runtime dependencies. A separate Python installation is not required to run the packaged application.
-
----
-
-## Features
-
-- Register digital evidence files.
-- Generate SHA-256 cryptographic hash values.
-- Store evidence records in an SQLite database.
-- Verify digital evidence integrity.
-- Detect modified or missing evidence files.
-- Maintain verification history.
-- Search and view registered evidence.
-- Soft-delete evidence records.
-- View deleted evidence records.
-- Restore archived evidence.
-- Permanently delete archived evidence records.
-- Generate PDF investigation reports.
-- Choose a custom location to save generated reports.
-- Open generated reports directly.
-- Open the folder containing generated reports.
-- Reset the database for a fresh start.
-
----
-
-## Technologies Used
-
-- **Python** – Core application development.
-- **Tkinter** – Graphical User Interface.
-- **SQLite** – Local database management.
-- **SHA-256 (Hashlib)** – Cryptographic hashing and integrity verification.
-- **ReportLab** – PDF investigation report generation.
-- **PyInstaller** – Desktop application packaging.
+The application provides a graphical user interface (GUI) for managing digital evidence, maintaining verification records, and generating PDF investigation reports.
 
 ---
 
@@ -68,64 +16,130 @@ The system provides a graphical user interface for evidence management, integrit
 | 3 | Swayam Dakare | 1272261583 |
 | 4 | Samruddhi Salunke | 1272261145 |
 
-## Team Contributions
+---
 
-| Team Member | Contribution |
+## Features
+
+### 1. Digital Evidence Management
+- Register digital evidence files.
+- Store evidence details in a local SQLite database.
+- View and search registered evidence records.
+- Track evidence information using unique Evidence IDs.
+
+### 2. SHA-256 Integrity Verification
+- Generate SHA-256 hash values for registered evidence.
+- Verify the integrity of digital evidence.
+- Detect modifications to evidence files.
+- Identify missing or inaccessible evidence files.
+- Maintain a verification history with timestamps and results.
+
+### 3. Evidence Archiving and Recovery
+- Soft-delete evidence records without immediately removing them permanently.
+- View deleted evidence records.
+- Restore previously deleted evidence records.
+- Permanently delete evidence records when required.
+
+### 4. PDF Investigation Reports
+- Generate PDF investigation reports for registered evidence.
+- Include evidence details, SHA-256 hash information, and verification results.
+- Maintain verification history in generated reports.
+- Choose a custom location to save generated reports.
+- Open the generated PDF directly or open its containing folder.
+
+### 5. Database Management
+- Store application data locally using SQLite.
+- Maintain a persistent database across application sessions.
+- Reset the database when required.
+
+---
+
+## Technologies Used
+
+| Technology | Purpose |
 |---|---|
-| Pranav Mohan Agrawal | Software Development & Code Implementation |
-| Rujula Jadhav | Presentation (PPT) Preparation |
-| Swayam Dakare | Project Poster Design |
-| Samruddhi Salunke | Project Presentation |
+| Python | Core application development |
+| Tkinter | Graphical User Interface |
+| SQLite | Local database management |
+| Hashlib | SHA-256 cryptographic hashing |
+| ReportLab | PDF investigation report generation |
+| PyInstaller | Packaging the application as a desktop app |
 
 ---
 
-## Requirements
+## Application Release
 
-- Python 3.10 or later.
-- Required Python packages listed in `requirements.txt`.
-- Tkinter and SQLite support in the Python installation.
+<escape>**</escape>Current Release:** DEIVS v1.0.0
 
-*These requirements apply when running the project from source. The packaged desktop application includes its required runtime dependencies.*
+**Platform:** macOS
+
+**Download:** [Download DEIVS v1.0.0](https://github.com/pranavagrawalll/DEIVS-Digital-Evidence-Integrity-System/releases/tag/v1.0.0)
+
+### Installation (macOS)
+
+1. Visit the [GitHub Releases](https://github.com/pranavagrawalll/DEIVS-Digital-Evidence-Integrity-System/releases) page.
+2. Download `DEIVS-macOS.zip`.
+3. Extract the downloaded ZIP file.
+4. Open the extracted `DEIVS.app` application.
+
+### macOS Security Notice
+
+DEIVS is an academic project and is currently not signed with an Apple Developer ID certificate or notarized by Apple.
+
+Therefore, macOS Gatekeeper may display a security warning when opening the application for the first time.
+
+If macOS displays a warning that the developer cannot be verified or Apple cannot check the application for malicious software, follow these steps:
+
+1. First, try opening `DEIVS.app`.
+2. Open the **Apple Menu** and navigate to **System Settings**.
+3. Select **Privacy & Security**.
+4. Scroll down to the **Security** section.
+5. Locate the message indicating that DEIVS was blocked.
+6. Click **Open Anyway**.
+7. Confirm the action by clicking **Open** in the confirmation dialog.
+8. Enter the Mac login password if requested.
+
+After completing these steps, DEIVS should open normally on subsequent launches.
+
+**Important:** Only use this procedure if DEIVS was downloaded from the official project GitHub Releases page and the downloaded application is trusted. Do not bypass warnings stating that an application will damage your computer or that it is damaged.
+
+For additional information, refer to [Apple's official security instructions](https://support.apple.com/en-in/102445).
 
 ---
 
-## Installation – Run from Source
+## Running from Source Code
 
-### 1. Clone the repository
+To run the project directly from its source code:
 
-```bash
-git clone https://github.com/pranavagrawalll/DEIVS-Digital-Evidence-Integrity-System.git
-```
+### Requirements
+- Python 3.10 or later
+- Required packages listed in `requirements.txt`
+- Tkinter support in the Python installation
 
-### 2. Open the project folder
+### Installation Steps
 
-```bash
-cd DEIVS-Digital-Evidence-Integrity-System
-```
+1. Clone the repository:
 
-### 3. Create a virtual environment
+   ```bash
+   git clone https://github.com/pranavagrawalll/DEIVS-Digital-Evidence-Integrity-System.git
+   ```
 
-```bash
-python3 -m venv .venv
-```
+2. Navigate to the project directory:
 
-### 4. Activate the virtual environment
+   ```bash
+   cd DEIVS-Digital-Evidence-Integrity-System
+   ```
 
-```bash
-source .venv/bin/activate
-```
+3. Install the required dependencies:
 
-### 5. Install dependencies
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```bash
-pip install -r requirements.txt
-```
+4. Launch the desktop application:
 
-### 6. Run the application
-
-```bash
-python gui.py
-```
+   ```bash
+   python gui.py
+   ```
 
 ---
 
@@ -139,33 +153,53 @@ DEIVS/
 ├── database.py
 ├── hashing.py
 ├── report.py
+│
+├── main.py
 ├── evidence_manager.py
 ├── verification.py
 ├── reset_project.py
-├── main.py
+│
 ├── requirements.txt
-└── README.md
+├── README.md
+└── .gitignore
 ```
+
+### Core Modules
+
+| File | Description |
+|---|---|
+| `gui.py` | Main desktop application and graphical interface |
+| `app_paths.py` | Manages application data and report storage locations |
+| `database.py` | Handles SQLite database operations |
+| `hashing.py` | Generates SHA-256 hash values |
+| `report.py` | Generates PDF investigation reports |
+| `main.py` | Original command-line application |
+| `evidence_manager.py` | Evidence management operations |
+| `verification.py` | Evidence verification operations |
+| `reset_project.py` | Database reset functionality |
 
 ---
 
-## Database and Data Storage
+## Data Storage
 
-DEIVS uses SQLite for local evidence record management.
+DEIVS stores application data locally on the user's computer.
 
-Application data is stored in the user's application support directory, keeping database records separate from the application installation.
+- Evidence records and verification history are maintained in an SQLite database.
+- Application data is stored in the operating system's application support/data directory.
+- Generated PDF reports are saved in the default reports directory or another location selected by the user.
+- Evidence files remain at their original locations; DEIVS stores their recorded details and hashes.
 
-Generated PDF investigation reports are saved in the default reports directory. Users can also select a custom location when generating a report.
-
-Original evidence files are not deleted when an evidence record is archived or permanently removed from the DEIVS database.
+**Note:** Users should maintain appropriate backups of their evidence files and application database.
 
 ---
 
 ## Disclaimer
 
-DEIVS is an educational project developed for academic purposes. It demonstrates digital evidence management and hash-based integrity verification.
+DEIVS is an educational project developed for academic purposes as a digital forensic demonstration tool.
 
-It is a prototype and is not intended to replace professional digital forensic tools or legally validated evidence-handling procedures. The integrity verification result is based on SHA-256 hash comparison and does not independently establish the authenticity or legal admissibility of evidence.
+It is a prototype and is not an independently certified forensic platform. It does not independently establish the authenticity, legal admissibility, or complete chain of custody of digital evidence.
+
+The application provides hash-based integrity verification and evidence management features, but its results should not be treated as a substitute for professional digital forensic tools, validated forensic procedures, or expert examination.
 
 ---
 
