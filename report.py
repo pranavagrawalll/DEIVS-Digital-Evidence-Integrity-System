@@ -3,8 +3,8 @@
 # DEIVS - INVESTIGATION REPORT GENERATOR
 # ==========================================
 
-import os
 from datetime import datetime
+from pathlib import Path
 from xml.sax.saxutils import escape
 
 from reportlab.lib import colors
@@ -24,12 +24,14 @@ from database import (
     get_verification_history
 )
 
+from app_paths import get_reports_dir
+
 
 # ------------------------------------------
 # 1. GENERATE PDF REPORT
 # ------------------------------------------
 
-def generate_report(evidence_id):
+def generate_report(evidence_id, output_path=None):
 
     # Retrieve evidence details
     record = get_evidence_by_id(evidence_id)
@@ -44,19 +46,24 @@ def generate_report(evidence_id):
     # Get latest verification record
     latest_verification = history[0] if history else None
 
-    # Create reports folder
-    os.makedirs("reports", exist_ok=True)
-
-    # Generate report filename
+    # Generate a suggested filename and resolve the chosen save destination.
     report_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    suggested_name = f"DEIVS_Report_{evidence_id}_{report_time}.pdf"
 
-    report_name = f"DEIVS_Report_{evidence_id}_{report_time}.pdf"
+    if output_path is None:
+        report_path = get_reports_dir() / suggested_name
+    else:
+        report_path = Path(output_path).expanduser()
+        if report_path.suffix.lower() != ".pdf":
+            report_path = report_path.with_suffix(".pdf")
 
-    report_path = os.path.join("reports", report_name)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_name = report_path.name
+    report_path = report_path.resolve()
 
     # Create PDF document
     pdf = SimpleDocTemplate(
-        report_path,
+        str(report_path),
         pagesize=A4,
         rightMargin=20 * mm,
         leftMargin=20 * mm,
@@ -284,6 +291,8 @@ def generate_report(evidence_id):
     print("Report Name:", report_name)
     print("Saved Location:", report_path)
     print("===================================")
+
+    return str(report_path)
 
 
 # ------------------------------------------
